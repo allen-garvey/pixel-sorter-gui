@@ -56,19 +56,39 @@ ImageViewer::ImageViewer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ImageViewer),
     imageLabel(new QLabel),
-    scrollArea(new QScrollArea),
+    imageScrollArea(new QScrollArea),
     scaleFactor(1)
 {
     ui->setupUi(this);
+
+    QHBoxLayout *mainLayout = new QHBoxLayout();
+
+    //layout for image view
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
-    scrollArea->setBackgroundRole(QPalette::Dark);
-    scrollArea->setWidget(imageLabel);
-    scrollArea->setVisible(false);
-    setCentralWidget(scrollArea);
+    imageScrollArea->setBackgroundRole(QPalette::Dark);
+    imageScrollArea->setWidget(imageLabel);
+    imageScrollArea->setVisible(false);
 
+    //layout for controls
+    QWidget *controlsContainerWidget = new QWidget();
+    QVBoxLayout *controlsMainLayout = new QVBoxLayout();
+    controlsContainerWidget->setLayout(controlsMainLayout);
+    QPushButton *sortButton = new QPushButton("Sort");
+    controlsMainLayout->addWidget(sortButton);
+
+    //add both sections to main layout
+    mainLayout->addWidget(controlsContainerWidget);
+    mainLayout->addWidget(imageScrollArea);
+
+    //add main layout to window
+    QWidget *centralWidget = new QWidget();
+    setCentralWidget(centralWidget);
+    centralWidget->setLayout(mainLayout);
+
+    //setup menu
     createActions();
 
     resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
@@ -106,7 +126,7 @@ void ImageViewer::setImage(const QImage &newImage)
     imageLabel->setPixmap(QPixmap::fromImage(image));
     scaleFactor = 1.0;
 
-    scrollArea->setVisible(true);
+    imageScrollArea->setVisible(true);
     fitToWindowAct->setEnabled(true);
     updateActions();
 
@@ -226,7 +246,7 @@ void ImageViewer::normalSize()
 void ImageViewer::fitToWindow()
 {
     bool fitToWindow = fitToWindowAct->isChecked();
-    scrollArea->setWidgetResizable(fitToWindow);
+    imageScrollArea->setWidgetResizable(fitToWindow);
     if (!fitToWindow)
         normalSize();
     updateActions();
@@ -316,8 +336,8 @@ void ImageViewer::scaleImage(double factor)
     scaleFactor *= factor;
     imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
 
-    adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
-    adjustScrollBar(scrollArea->verticalScrollBar(), factor);
+    adjustScrollBar(imageScrollArea->horizontalScrollBar(), factor);
+    adjustScrollBar(imageScrollArea->verticalScrollBar(), factor);
 
     zoomInAct->setEnabled(scaleFactor < 3.0);
     zoomOutAct->setEnabled(scaleFactor > 0.333);

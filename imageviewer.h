@@ -98,7 +98,7 @@ private:
 
         QImage image;
         QLabel *imageLabel;
-        QScrollArea *scrollArea;
+        QScrollArea *imageScrollArea;
         double scaleFactor;
 
         QAction *saveAsAct;
