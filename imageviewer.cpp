@@ -75,6 +75,7 @@ ImageViewer::ImageViewer(QWidget *parent) :
     createActions();
 
     resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+
 }
 
 ImageViewer::~ImageViewer()
