@@ -1,6 +1,6 @@
 # Pixel Sorter
 
-GUI application made with Qt to pixel sort image files.
+GUI application made with Qt to pixel sort image files. Based on [Qt ImageView example](http://doc.qt.io/qt-5/qtwidgets-widgets-imageviewer-example.html)
 
 ## Dependencies
 
