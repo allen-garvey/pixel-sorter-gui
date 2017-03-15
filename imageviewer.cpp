@@ -76,6 +76,24 @@ ImageViewer::ImageViewer(QWidget *parent) :
     QWidget *controlsContainerWidget = new QWidget();
     QVBoxLayout *controlsMainLayout = new QVBoxLayout();
     controlsContainerWidget->setLayout(controlsMainLayout);
+
+    //horizonal sort controls
+    QVBoxLayout *horizontalSortControlsLayout = new QVBoxLayout();
+    QLabel *horizontalSortTitle = new QLabel("Horizontal Sort");
+    horizontalSortControlsLayout->addWidget(horizontalSortTitle);
+
+    QLabel *horizontalSortStartLabel = new QLabel("Start Sorting at line:");
+    horizontalSortControlsLayout->addWidget(horizontalSortStartLabel);
+    QLineEdit *horizontalSortStartLineInput = new QLineEdit();
+    horizontalSortStartLineInput->setValidator( new QIntValidator(0, INT_MAX, this) );
+    horizontalSortControlsLayout->addWidget(horizontalSortStartLineInput);
+
+
+    QWidget *horizontalSortControlsWidget = new QWidget();
+    horizontalSortControlsWidget->setLayout(horizontalSortControlsLayout);
+    controlsMainLayout->addWidget(horizontalSortControlsWidget);
+
+    //sort button
     QPushButton *sortButton = new QPushButton("Sort");
     controlsMainLayout->addWidget(sortButton);
 
