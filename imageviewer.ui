@@ -78,7 +78,7 @@
      <string>Then Sort for n lines: </string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="horizontalSortCountLineEdit">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -88,7 +88,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="horizontalSortStartLineEdit">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -111,7 +111,7 @@
      <string>Start Sorting at line:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="horizontalSortSkipLineEdit">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -147,7 +147,7 @@
      <string>Ending at line:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="horizontalSortEndLineEdit">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -183,7 +183,7 @@
      <string>Sorting by</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="horizontalSortTypeComboBox">
     <property name="geometry">
      <rect>
       <x>210</x>

@@ -71,6 +71,12 @@ ImageViewer::ImageViewer(QWidget *parent) :
     imageScrollArea->setBackgroundRole(QPalette::Dark);
     imageScrollArea->setVisible(false);
 
+    //setup horizontal sort controls
+    ui->horizontalSortStartLineEdit->setValidator( new QIntValidator(0, INT_MAX, this) );
+    ui->horizontalSortCountLineEdit->setValidator( new QIntValidator(0, INT_MAX, this) );
+    ui->horizontalSortSkipLineEdit->setValidator( new QIntValidator(0, INT_MAX, this) );
+    ui->horizontalSortEndLineEdit->setValidator( new QIntValidator(0, INT_MAX, this) );
+
     //setup menu
     createActions();
 
