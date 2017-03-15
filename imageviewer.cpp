@@ -61,17 +61,17 @@ ImageViewer::ImageViewer(QWidget *parent) :
 {
     ui->setupUi(this);
     imageLabel->setBackgroundRole(QPalette::Base);
-        imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-        imageLabel->setScaledContents(true);
+    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    imageLabel->setScaledContents(true);
 
-        scrollArea->setBackgroundRole(QPalette::Dark);
-        scrollArea->setWidget(imageLabel);
-        scrollArea->setVisible(false);
-        setCentralWidget(scrollArea);
+    scrollArea->setBackgroundRole(QPalette::Dark);
+    scrollArea->setWidget(imageLabel);
+    scrollArea->setVisible(false);
+    setCentralWidget(scrollArea);
 
-        createActions();
+    createActions();
 
-        resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
 }
 
 ImageViewer::~ImageViewer()

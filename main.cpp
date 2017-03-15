@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Image Viewer"));
+    QGuiApplication::setApplicationDisplayName(ImageViewer::tr("Pixel Sorter"));
     ImageViewer imageViewer;
     imageViewer.show();
     return app.exec();
