@@ -120,8 +120,14 @@ void ImageViewer::setImage(const QImage &newImage)
     fitToWindowAct->setEnabled(true);
     updateActions();
 
-    if (!fitToWindowAct->isChecked())
+    if (!fitToWindowAct->isChecked()){
         imageLabel->adjustSize();
+    }
+    //set horizontal sort inputs to default values
+    ui->horizontalSortStartLineEdit->setText("0");
+    ui->horizontalSortCountLineEdit->setText("1");
+    ui->horizontalSortSkipLineEdit->setText("0");
+    ui->horizontalSortEndLineEdit->setText(QString::number(image.height()));
 }
 
 
