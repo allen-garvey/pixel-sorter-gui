@@ -55,56 +55,21 @@
 ImageViewer::ImageViewer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ImageViewer),
-    imageLabel(new QLabel),
-    imageScrollArea(new QScrollArea),
+//    imageLabel(new QLabel),
+//    imageScrollArea(new QScrollArea),
     scaleFactor(1)
 {
     ui->setupUi(this);
 
-    QHBoxLayout *mainLayout = new QHBoxLayout();
+    imageLabel = ui->imageLabel;
+    imageScrollArea = ui->imageScrollArea;
 
     //layout for image view
     imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
     imageScrollArea->setBackgroundRole(QPalette::Dark);
-    imageScrollArea->setWidget(imageLabel);
     imageScrollArea->setVisible(false);
-
-    //layout for controls
-    QWidget *controlsContainerWidget = new QWidget();
-    QVBoxLayout *controlsMainLayout = new QVBoxLayout();
-    controlsContainerWidget->setLayout(controlsMainLayout);
-
-    //horizonal sort controls
-    QVBoxLayout *horizontalSortControlsLayout = new QVBoxLayout();
-    QLabel *horizontalSortTitle = new QLabel("Horizontal Sort");
-    horizontalSortControlsLayout->addWidget(horizontalSortTitle);
-
-    QLabel *horizontalSortStartLabel = new QLabel("Start Sorting at line:");
-    horizontalSortControlsLayout->addWidget(horizontalSortStartLabel);
-    QLineEdit *horizontalSortStartLineInput = new QLineEdit();
-    horizontalSortStartLineInput->setValidator( new QIntValidator(0, INT_MAX, this) );
-    horizontalSortControlsLayout->addWidget(horizontalSortStartLineInput);
-
-
-    QWidget *horizontalSortControlsWidget = new QWidget();
-    horizontalSortControlsWidget->setLayout(horizontalSortControlsLayout);
-    controlsMainLayout->addWidget(horizontalSortControlsWidget);
-
-    //sort button
-    QPushButton *sortButton = new QPushButton("Sort");
-    controlsMainLayout->addWidget(sortButton);
-
-    //add both sections to main layout
-    mainLayout->addWidget(controlsContainerWidget);
-    mainLayout->addWidget(imageScrollArea);
-
-    //add main layout to window
-    QWidget *centralWidget = new QWidget();
-    setCentralWidget(centralWidget);
-    centralWidget->setLayout(mainLayout);
 
     //setup menu
     createActions();

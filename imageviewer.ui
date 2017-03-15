@@ -14,7 +14,7 @@
    <string>ImageViewer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QScrollArea" name="scrollArea">
+   <widget class="QScrollArea" name="imageScrollArea">
     <property name="geometry">
      <rect>
       <x>520</x>
@@ -26,29 +26,25 @@
     <property name="widgetResizable">
      <bool>true</bool>
     </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>529</width>
-       <height>389</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="label">
+    <widget class="QLabel" name="imageLabel">
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>190</y>
-        <width>59</width>
-        <height>16</height>
+        <y>45</y>
+        <width>351</width>
+        <height>161</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="text">
        <string/>
       </property>
      </widget>
-    </widget>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
