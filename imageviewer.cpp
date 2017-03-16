@@ -77,6 +77,9 @@ ImageViewer::ImageViewer(QWidget *parent) :
     ui->horizontalSortSkipLineEdit->setValidator( new QIntValidator(0, INT_MAX, this) );
     ui->horizontalSortEndLineEdit->setValidator( new QIntValidator(0, INT_MAX, this) );
 
+    //hook up sort button
+    connect(ui->sortButton, SIGNAL (released()),this, SLOT (sortButtonClicked();));
+
     //setup menu
     createActions();
 
@@ -343,4 +346,9 @@ void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 {
     scrollBar->setValue(int(factor * scrollBar->value()
                             + ((factor - 1) * scrollBar->pageStep()/2)));
+}
+
+void ImageViewer::sortButtonClicked()
+{
+
 }

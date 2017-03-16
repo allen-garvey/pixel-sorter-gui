@@ -85,6 +85,7 @@ private slots:
     void normalSize();
     void fitToWindow();
     void about();
+    void sortButtonClicked();
 
 private:
     Ui::ImageViewer *ui;
