@@ -3,7 +3,7 @@
 
 #include <QtWidgets>
 
-enum PixelSorterColor {red, green, blue};
+enum PixelSorterColor {red=0, green, blue};
 
 class PixelSorter
 {
