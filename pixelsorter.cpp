@@ -3,20 +3,28 @@
 #include <iostream>
 
 void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){
+    auto sortFunc = [&](QRgb const & a, QRgb const & b) -> bool {
+        switch(sortType){
+            case red:
+                return qRed(a) < qRed(b);
+            case green:
+                return qGreen(a) < qGreen(b);
+            case hue:
+                return QColor(a).hue() < QColor(b).hue();
+            case saturation:
+                return QColor(a).saturation() < QColor(b).saturation();
+            case value:
+                return QColor(a).value() < QColor(b).value();
+            default:
+                //blue
+                return qBlue(a) < qBlue(b);
+        }
+    };
+
     int imageHeight = image->height();
     int imageWidth = image->width();
     //sanity check on endIndex
     endIndex = endIndex > imageHeight ? imageHeight : endIndex;
-
-    auto sortFunc = [&](QRgb const & a, QRgb const & b) -> bool {
-        if(sortType == red){
-            return qRed(a) < qRed(b);
-        }
-        else if(sortType == green){
-            return qGreen(a) < qGreen(b);
-        }
-        return qBlue(a) < qBlue(b);
-    };
 
     //pixel manipulation based on: http://stackoverflow.com/questions/2095039/qt-qimage-pixel-manipulation
     int linesSorted = 0;

@@ -207,6 +207,21 @@
       <string>Blue</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>Hue</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Saturation</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Value</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
