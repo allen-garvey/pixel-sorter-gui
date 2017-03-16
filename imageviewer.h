@@ -96,6 +96,7 @@ private:
     void setImage(const QImage &newImage);
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
+    void resetSortControlsToDefaults();
 
         QImage image;
         QLabel *imageLabel;

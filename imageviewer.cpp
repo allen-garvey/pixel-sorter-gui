@@ -107,7 +107,7 @@ bool ImageViewer::loadFile(const QString &fileName)
     isImageLoaded = true;
 
     setImage(newImage);
-
+    resetSortControlsToDefaults();
     setWindowFilePath(fileName);
 
     const QString message = tr("Opened \"%1\", %2x%3, Depth: %4")
@@ -129,6 +129,9 @@ void ImageViewer::setImage(const QImage &newImage)
     if (!fitToWindowAct->isChecked()){
         imageLabel->adjustSize();
     }
+}
+
+void ImageViewer::resetSortControlsToDefaults(){
     //set horizontal sort inputs to default values
     ui->horizontalSortStartLineEdit->setText("0");
     ui->horizontalSortCountLineEdit->setText("1");
