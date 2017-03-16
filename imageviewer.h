@@ -91,16 +91,17 @@ private:
     Ui::ImageViewer *ui;
     void createActions();
     void createMenus();
-        void updateActions();
-        bool saveFile(const QString &fileName);
-        void setImage(const QImage &newImage);
-        void scaleImage(double factor);
-        void adjustScrollBar(QScrollBar *scrollBar, double factor);
+    void updateActions();
+    bool saveFile(const QString &fileName);
+    void setImage(const QImage &newImage);
+    void scaleImage(double factor);
+    void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
         QImage image;
         QLabel *imageLabel;
         QScrollArea *imageScrollArea;
         double scaleFactor;
+        bool isImageLoaded;
 
         QAction *saveAsAct;
         QAction *copyAct;

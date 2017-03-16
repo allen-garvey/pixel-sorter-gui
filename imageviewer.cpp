@@ -51,6 +51,7 @@
 #include <QtWidgets>
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
+#include "pixelsorter.h"
 
 ImageViewer::ImageViewer(QWidget *parent) :
     QMainWindow(parent),
@@ -78,7 +79,8 @@ ImageViewer::ImageViewer(QWidget *parent) :
     ui->horizontalSortEndLineEdit->setValidator( new QIntValidator(0, INT_MAX, this) );
 
     //hook up sort button
-    connect(ui->sortButton, SIGNAL (released()),this, SLOT (sortButtonClicked();));
+    isImageLoaded = false;
+    connect(ui->sortButton, SIGNAL (released()),this, SLOT (sortButtonClicked()));
 
     //setup menu
     createActions();
@@ -102,6 +104,7 @@ bool ImageViewer::loadFile(const QString &fileName)
                                  .arg(QDir::toNativeSeparators(fileName), reader.errorString()));
         return false;
     }
+    isImageLoaded = true;
 
     setImage(newImage);
 
@@ -350,5 +353,12 @@ void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 
 void ImageViewer::sortButtonClicked()
 {
-
+    if(!isImageLoaded){
+        return;
+    }
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    PixelSorter::pixelSortHorizontal(&image, red, 0, 1, 0, image.height());
+    QImage const& const_image = image;
+    setImage(const_image);
+    QApplication::restoreOverrideCursor();
 }
