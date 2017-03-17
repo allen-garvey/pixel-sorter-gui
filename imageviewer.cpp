@@ -134,10 +134,10 @@ void ImageViewer::setImage(const QImage &newImage)
 
 void ImageViewer::resetSortControlsToDefaults(){
     //set horizontal sort inputs to default values
-    ui->horizontalSortStartLineEdit->setText("0");
-    ui->horizontalSortCountLineEdit->setText("1");
-    ui->horizontalSortSkipLineEdit->setText("0");
-    ui->horizontalSortEndLineEdit->setText(QString::number(image.height()));
+    ui->horizontalSortStartLineEdit->setText(QString::number(defaultSortStart()));
+    ui->horizontalSortCountLineEdit->setText(QString::number(defaultSortCount()));
+    ui->horizontalSortSkipLineEdit->setText(QString::number(defaultSortSkip()));
+    ui->horizontalSortEndLineEdit->setText(QString::number(defaultHorizontalSortEnd(&image)));
 }
 
 
@@ -355,6 +355,23 @@ void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 
+int ImageViewer::defaultSortStart()
+{
+    return 0;
+}
+int ImageViewer::defaultSortCount()
+{
+    return 1;
+}
+int ImageViewer::defaultSortSkip()
+{
+    return 0;
+}
+int ImageViewer::defaultHorizontalSortEnd(QImage *image)
+{
+    return image->height();
+}
+
 void ImageViewer::sortButtonClicked()
 {
     //don't do anything if no image, or if currently sorting
@@ -369,9 +386,30 @@ void ImageViewer::sortButtonClicked()
     bool conversionSucceeded;
     //horizontal sort
     int horizontalSortStartIndex = ui->horizontalSortStartLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        horizontalSortStartIndex = defaultSortStart();
+        ui->horizontalSortStartLineEdit->setText(QString::number(defaultSortStart()));
+    }
+
     int horizontalSortCountIndex = ui->horizontalSortCountLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        horizontalSortCountIndex = defaultSortCount();
+        ui->horizontalSortCountLineEdit->setText(QString::number(defaultSortCount()));
+    }
+
+
     int horizontalSortSkipIndex = ui->horizontalSortSkipLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        horizontalSortSkipIndex = defaultSortSkip();
+        ui->horizontalSortSkipLineEdit->setText(QString::number(defaultSortSkip()));
+    }
+
     int horizontalSortEndIndex = ui->horizontalSortEndLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        horizontalSortEndIndex = defaultHorizontalSortEnd(&image);
+        ui->horizontalSortEndLineEdit->setText(QString::number(defaultHorizontalSortEnd(&image)));
+    }
+
     PixelSorterColor sortColor = static_cast<PixelSorterColor>(ui->horizontalSortTypeComboBox->currentIndex());
     PixelSorter::pixelSortHorizontal(&image, sortColor, horizontalSortStartIndex, horizontalSortCountIndex, horizontalSortSkipIndex, horizontalSortEndIndex);
 

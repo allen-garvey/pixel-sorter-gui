@@ -97,6 +97,10 @@ private:
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
     void resetSortControlsToDefaults();
+    int defaultSortStart();
+    int defaultSortCount();
+    int defaultSortSkip();
+    int defaultHorizontalSortEnd(QImage *image);
 
         QImage image;
         QLabel *imageLabel;
