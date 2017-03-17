@@ -103,6 +103,7 @@ private:
         QScrollArea *imageScrollArea;
         double scaleFactor;
         bool isImageLoaded;
+        bool isCurrentlySorting;
 
         QAction *saveAsAct;
         QAction *copyAct;

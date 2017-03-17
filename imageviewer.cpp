@@ -80,6 +80,7 @@ ImageViewer::ImageViewer(QWidget *parent) :
 
     //hook up sort button
     isImageLoaded = false;
+    isCurrentlySorting = false;
     connect(ui->sortButton, SIGNAL (released()),this, SLOT (sortButtonClicked()));
 
     //setup menu
@@ -356,18 +357,30 @@ void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 
 void ImageViewer::sortButtonClicked()
 {
-    if(!isImageLoaded){
+    //don't do anything if no image, or if currently sorting
+    if(!isImageLoaded || isCurrentlySorting){
         return;
     }
+    //set application busy
+    isCurrentlySorting = true;
+    ui->sortButton->setEnabled(false);
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
     bool conversionSucceeded;
+    //horizontal sort
     int horizontalSortStartIndex = ui->horizontalSortStartLineEdit->text().toInt(&conversionSucceeded);
     int horizontalSortCountIndex = ui->horizontalSortCountLineEdit->text().toInt(&conversionSucceeded);
     int horizontalSortSkipIndex = ui->horizontalSortSkipLineEdit->text().toInt(&conversionSucceeded);
     int horizontalSortEndIndex = ui->horizontalSortEndLineEdit->text().toInt(&conversionSucceeded);
     PixelSorterColor sortColor = static_cast<PixelSorterColor>(ui->horizontalSortTypeComboBox->currentIndex());
     PixelSorter::pixelSortHorizontal(&image, sortColor, horizontalSortStartIndex, horizontalSortCountIndex, horizontalSortSkipIndex, horizontalSortEndIndex);
+
+    //set new image
     QImage const& const_image = image;
     setImage(const_image);
+
+    //reset application busy
+    isCurrentlySorting = false;
     QApplication::restoreOverrideCursor();
+    ui->sortButton->setEnabled(true);
 }
