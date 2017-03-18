@@ -398,6 +398,10 @@ void ImageViewer::sortButtonClicked()
 
 void ImageViewer::sortImageHorizontal()
 {
+    //check to see if horizontal sort enabled
+    if(!ui->horizontalSortEnabledCheckBox->isChecked()){
+        return;
+    }
     bool conversionSucceeded;
     //horizontal sort
     int horizontalSortStartIndex = ui->horizontalSortStartLineEdit->text().toInt(&conversionSucceeded);
