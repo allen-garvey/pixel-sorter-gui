@@ -86,6 +86,7 @@ private slots:
     void fitToWindow();
     void about();
     void sortButtonClicked();
+    void horizontalSortEnableCheckBoxChecked(bool checked);
 
 private:
     Ui::ImageViewer *ui;

@@ -65,7 +65,7 @@
      <string>Pixel Sort Image</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="horizontalSortCountLabel">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -89,6 +89,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="horizontalSortStartLineEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -98,7 +101,10 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="horizontalSortStartLabel">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>28</x>
@@ -121,7 +127,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="horizontalSortSkipLabel">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -134,7 +140,7 @@
      <string>Then Skip n lines: </string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="horizontalSortEndLabel">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -157,7 +163,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="horizontalSortTitleLabel">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -170,7 +176,7 @@
      <string>Horizontal Sort</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="horizontalSortTypeLabel">
     <property name="geometry">
      <rect>
       <x>30</x>

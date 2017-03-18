@@ -83,6 +83,8 @@ ImageViewer::ImageViewer(QWidget *parent) :
     isCurrentlySorting = false;
     connect(ui->sortButton, SIGNAL (released()),this, SLOT (sortButtonClicked()));
 
+    connect(ui->horizontalSortEnabledCheckBox, SIGNAL (clicked(bool)),this, SLOT (horizontalSortEnableCheckBoxChecked(bool)));
+
     //setup menu
     createActions();
 
@@ -431,4 +433,22 @@ void ImageViewer::sortImageHorizontal()
 
     PixelSorterColor sortColor = static_cast<PixelSorterColor>(ui->horizontalSortTypeComboBox->currentIndex());
     PixelSorter::pixelSortHorizontal(&image, sortColor, horizontalSortStartIndex, horizontalSortCountIndex, horizontalSortSkipIndex, horizontalSortEndIndex);
+}
+
+//disable horizontal sort ui when horizontal sort is disabled
+void ImageViewer::horizontalSortEnableCheckBoxChecked(bool checked){
+    ui->horizontalSortCountLabel->setEnabled(checked);
+    ui->horizontalSortCountLineEdit->setEnabled(checked);
+
+    ui->horizontalSortEndLabel->setEnabled(checked);
+    ui->horizontalSortEndLineEdit->setEnabled(checked);
+
+    ui->horizontalSortSkipLabel->setEnabled(checked);
+    ui->horizontalSortSkipLineEdit->setEnabled(checked);
+
+    ui->horizontalSortStartLabel->setEnabled(checked);
+    ui->horizontalSortStartLineEdit->setEnabled(checked);
+
+    ui->horizontalSortTypeComboBox->setEnabled(checked);
+    ui->horizontalSortTypeLabel->setEnabled(checked);
 }
