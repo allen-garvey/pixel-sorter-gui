@@ -383,6 +383,21 @@ void ImageViewer::sortButtonClicked()
     ui->sortButton->setEnabled(false);
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    //sort image
+    sortImageHorizontal();
+
+    //set new image
+    QImage const& const_image = image;
+    setImage(const_image);
+
+    //reset application busy
+    isCurrentlySorting = false;
+    QApplication::restoreOverrideCursor();
+    ui->sortButton->setEnabled(true);
+}
+
+void ImageViewer::sortImageHorizontal()
+{
     bool conversionSucceeded;
     //horizontal sort
     int horizontalSortStartIndex = ui->horizontalSortStartLineEdit->text().toInt(&conversionSucceeded);
@@ -412,13 +427,4 @@ void ImageViewer::sortButtonClicked()
 
     PixelSorterColor sortColor = static_cast<PixelSorterColor>(ui->horizontalSortTypeComboBox->currentIndex());
     PixelSorter::pixelSortHorizontal(&image, sortColor, horizontalSortStartIndex, horizontalSortCountIndex, horizontalSortSkipIndex, horizontalSortEndIndex);
-
-    //set new image
-    QImage const& const_image = image;
-    setImage(const_image);
-
-    //reset application busy
-    isCurrentlySorting = false;
-    QApplication::restoreOverrideCursor();
-    ui->sortButton->setEnabled(true);
 }
