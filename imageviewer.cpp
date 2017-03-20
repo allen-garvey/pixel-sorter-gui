@@ -377,7 +377,7 @@ int ImageViewer::defaultHorizontalSortEnd(QImage *image)
 void ImageViewer::sortButtonClicked()
 {
     //don't do anything if no image, or if currently sorting
-    if(!isImageLoaded || isCurrentlySorting){
+    if(!isImageLoaded || isCurrentlySorting || !ui->horizontalSortEnabledCheckBox->isChecked()){
         return;
     }
     //set application busy
