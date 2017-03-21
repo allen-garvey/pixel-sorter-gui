@@ -87,6 +87,7 @@ private slots:
     void about();
     void sortButtonClicked();
     void horizontalSortEnableCheckBoxChecked(bool checked);
+    void verticalSortEnableCheckBoxChecked(bool checked);
 
 private:
     Ui::ImageViewer *ui;

@@ -84,6 +84,7 @@ ImageViewer::ImageViewer(QWidget *parent) :
     connect(ui->sortButton, SIGNAL (released()),this, SLOT (sortButtonClicked()));
 
     connect(ui->horizontalSortEnabledCheckBox, SIGNAL (clicked(bool)),this, SLOT (horizontalSortEnableCheckBoxChecked(bool)));
+    connect(ui->verticalSortEnabledCheckBox, SIGNAL (clicked(bool)),this, SLOT (verticalSortEnableCheckBoxChecked(bool)));
 
     //setup menu
     createActions();
@@ -377,7 +378,7 @@ int ImageViewer::defaultHorizontalSortEnd(QImage *image)
 void ImageViewer::sortButtonClicked()
 {
     //don't do anything if no image, or if currently sorting
-    if(!isImageLoaded || isCurrentlySorting || !ui->horizontalSortEnabledCheckBox->isChecked()){
+    if(!isImageLoaded || isCurrentlySorting || (!ui->horizontalSortEnabledCheckBox->isChecked() && !ui->verticalSortEnabledCheckBox->isChecked())){
         return;
     }
     //set application busy
@@ -451,4 +452,22 @@ void ImageViewer::horizontalSortEnableCheckBoxChecked(bool checked){
 
     ui->horizontalSortTypeComboBox->setEnabled(checked);
     ui->horizontalSortTypeLabel->setEnabled(checked);
+}
+
+//disable vertical sort ui when vertical sort is disabled
+void ImageViewer::verticalSortEnableCheckBoxChecked(bool checked){
+    ui->verticalSortCountLabel->setEnabled(checked);
+    ui->verticalSortCountLineEdit->setEnabled(checked);
+
+    ui->verticalSortEndLabel->setEnabled(checked);
+    ui->verticalSortEndLineEdit->setEnabled(checked);
+
+    ui->verticalSortSkipLabel->setEnabled(checked);
+    ui->verticalSortSkipLineEdit->setEnabled(checked);
+
+    ui->verticalSortStartLabel->setEnabled(checked);
+    ui->verticalSortStartLineEdit->setEnabled(checked);
+
+    ui->verticalSortTypeComboBox->setEnabled(checked);
+    ui->verticalSortTypeLabel->setEnabled(checked);
 }
