@@ -89,7 +89,7 @@ ImageViewer::ImageViewer(QWidget *parent) :
     //setup menu
     createActions();
 
-    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+    resize(QGuiApplication::primaryScreen()->availableSize() * 4 / 5);
 
 }
 
