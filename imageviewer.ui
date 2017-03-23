@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1202</width>
-    <height>634</height>
+    <height>663</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,8 +55,8 @@
    <widget class="QPushButton" name="sortButton">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>510</y>
+      <x>100</x>
+      <y>550</y>
       <width>131</width>
       <height>22</height>
      </rect>
@@ -435,6 +435,39 @@
     </property>
     <property name="text">
      <string>Sort by</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="sortOrderComboBox">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>500</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Horizontal → Vertical</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Vertical → Horizontal</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>500</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sort order</string>
     </property>
    </widget>
   </widget>
