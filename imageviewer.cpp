@@ -387,7 +387,14 @@ void ImageViewer::sortButtonClicked()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     //sort image
-    sortImageHorizontal();
+    if(ui->sortOrderComboBox->currentIndex() == 0){
+        sortImageHorizontal();
+        sortImageVertical();
+    }
+    else{
+        sortImageVertical();
+        sortImageHorizontal();
+    }
 
     //set new image
     QImage const& const_image = image;
@@ -397,6 +404,15 @@ void ImageViewer::sortButtonClicked()
     isCurrentlySorting = false;
     QApplication::restoreOverrideCursor();
     ui->sortButton->setEnabled(true);
+}
+
+void ImageViewer::sortImageVertical()
+{
+    //check to see if vertical sort enabled
+    if(!ui->verticalSortEnabledCheckBox->isChecked()){
+        return;
+    }
+
 }
 
 void ImageViewer::sortImageHorizontal()

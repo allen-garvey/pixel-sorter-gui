@@ -104,6 +104,7 @@ private:
     int defaultSortSkip();
     int defaultHorizontalSortEnd(QImage *image);
     void sortImageHorizontal();
+    void sortImageVertical();
 
         QImage image;
         QLabel *imageLabel;
