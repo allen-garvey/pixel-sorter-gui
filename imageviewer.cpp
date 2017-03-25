@@ -424,6 +424,35 @@ void ImageViewer::sortImageVertical()
         return;
     }
 
+    bool conversionSucceeded;
+
+    int verticalSortStartIndex = ui->verticalSortStartLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        verticalSortStartIndex = defaultSortStart();
+        ui->verticalSortStartLineEdit->setText(QString::number(defaultSortStart()));
+    }
+
+    int verticalSortCountIndex = ui->verticalSortCountLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        verticalSortCountIndex = defaultSortCount();
+        ui->verticalSortCountLineEdit->setText(QString::number(defaultSortCount()));
+    }
+
+
+    int verticalSortSkipIndex = ui->verticalSortSkipLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        verticalSortSkipIndex = defaultSortSkip();
+        ui->verticalSortSkipLineEdit->setText(QString::number(defaultSortSkip()));
+    }
+
+    int verticalSortEndIndex = ui->verticalSortEndLineEdit->text().toInt(&conversionSucceeded);
+    if(!conversionSucceeded){
+        verticalSortEndIndex = defaultVerticalSortEnd(&image);
+        ui->verticalSortEndLineEdit->setText(QString::number(defaultVerticalSortEnd(&image)));
+    }
+
+    PixelSorterColor sortColor = static_cast<PixelSorterColor>(ui->verticalSortTypeComboBox->currentIndex());
+
 }
 
 void ImageViewer::sortImageHorizontal()
@@ -433,7 +462,7 @@ void ImageViewer::sortImageHorizontal()
         return;
     }
     bool conversionSucceeded;
-    //horizontal sort
+
     int horizontalSortStartIndex = ui->horizontalSortStartLineEdit->text().toInt(&conversionSucceeded);
     if(!conversionSucceeded){
         horizontalSortStartIndex = defaultSortStart();
