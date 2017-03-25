@@ -141,6 +141,12 @@ void ImageViewer::resetSortControlsToDefaults(){
     ui->horizontalSortCountLineEdit->setText(QString::number(defaultSortCount()));
     ui->horizontalSortSkipLineEdit->setText(QString::number(defaultSortSkip()));
     ui->horizontalSortEndLineEdit->setText(QString::number(defaultHorizontalSortEnd(&image)));
+
+    //set vertical sort inputs to default values
+    ui->verticalSortStartLineEdit->setText(QString::number(defaultSortStart()));
+    ui->verticalSortCountLineEdit->setText(QString::number(defaultSortCount()));
+    ui->verticalSortSkipLineEdit->setText(QString::number(defaultSortSkip()));
+    ui->verticalSortEndLineEdit->setText(QString::number(defaultVerticalSortEnd(&image)));
 }
 
 
@@ -373,6 +379,11 @@ int ImageViewer::defaultSortSkip()
 int ImageViewer::defaultHorizontalSortEnd(QImage *image)
 {
     return image->height();
+}
+
+int ImageViewer::defaultVerticalSortEnd(QImage *image)
+{
+    return image->width();
 }
 
 void ImageViewer::sortButtonClicked()

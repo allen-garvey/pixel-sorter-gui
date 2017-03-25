@@ -103,6 +103,7 @@ private:
     int defaultSortCount();
     int defaultSortSkip();
     int defaultHorizontalSortEnd(QImage *image);
+    int defaultVerticalSortEnd(QImage *image);
     void sortImageHorizontal();
     void sortImageVertical();
 
