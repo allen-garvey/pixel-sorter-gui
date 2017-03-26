@@ -9,6 +9,7 @@ class PixelSorter
 {
  public:
   static void pixelSortHorizontal(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex);
+  static void pixelSortVertical(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex);
 
  private:
   // Disallow creating an instance of this object

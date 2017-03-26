@@ -40,3 +40,7 @@ void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, 
         }
     }
 }
+
+void PixelSorter::pixelSortVertical(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){
+    //TODO: add vertical sorting functionality
+}

@@ -452,6 +452,7 @@ void ImageViewer::sortImageVertical()
     }
 
     PixelSorterColor sortColor = static_cast<PixelSorterColor>(ui->verticalSortTypeComboBox->currentIndex());
+    PixelSorter::pixelSortVertical(&image, sortColor, verticalSortStartIndex, verticalSortCountIndex, verticalSortSkipIndex, verticalSortEndIndex);
 
 }
 
