@@ -31,8 +31,7 @@ void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, 
     QRgb *rowData;
     for(int i=startIndex;i<endIndex;i++){
         rowData = (QRgb*)image->scanLine(i);
-        std::sort(rowData, rowData + imageWidth - 1,
-                  sortFunc );
+        std::sort(rowData, rowData + imageWidth - 1, sortFunc);
         linesSorted++;
         if(linesSorted == countIndex){
             linesSorted = 0;
