@@ -1,6 +1,5 @@
 #include "pixelsorter.h"
 #include <algorithm>
-#include <iostream>
 
 void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){
     auto sortFunc = [&](QRgb const & a, QRgb const & b) -> bool {
