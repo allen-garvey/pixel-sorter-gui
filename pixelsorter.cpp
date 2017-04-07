@@ -1,8 +1,8 @@
 #include "pixelsorter.h"
 #include <algorithm>
 
-void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){
-    auto sortFunc = [&](QRgb const & a, QRgb const & b) -> bool {
+std::function<bool (QRgb const &, QRgb const &)> PixelSorter::sortFunc(PixelSorterColor sortType){
+    return [&](QRgb const & a, QRgb const & b) -> bool {
         switch(sortType){
             case red:
                 return qRed(a) < qRed(b);
@@ -19,7 +19,10 @@ void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, 
                 return qBlue(a) < qBlue(b);
         }
     };
+}
 
+void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){
+    auto sortFunc = PixelSorter::sortFunc(sortType);
     int imageHeight = image->height();
     int imageWidth = image->width();
     //sanity check on endIndex
