@@ -43,5 +43,15 @@ void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, 
 }
 
 void PixelSorter::pixelSortVertical(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){
-    //TODO: add vertical sorting functionality
+    QTransform rotationTransform;
+    rotationTransform.rotate(90);
+    QImage sortedImage = image->transformed(rotationTransform);
+
+    PixelSorter::pixelSortHorizontal(&sortedImage, sortType, startIndex, countIndex, skipIndex, endIndex);
+
+    //return to original orientation
+    rotationTransform.rotate(180);
+    sortedImage = sortedImage.transformed(rotationTransform);
+    *image = sortedImage;
+
 }
