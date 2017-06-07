@@ -3,26 +3,24 @@
 #include <omp.h>
 #include <iostream>
 
-std::function<bool (QRgb const &, QRgb const &)> PixelSorter::sortFunc(PixelSorterColor sortType){
-    switch(sortType){
-        case red:
-            return [](QRgb const & a, QRgb const & b) -> bool { return qRed(a) < qRed(b); };
-        case green:
-            return [](QRgb const & a, QRgb const & b) -> bool { return qGreen(a) < qGreen(b); };
-        case hue:
-            return [](QRgb const & a, QRgb const & b) -> bool { return QColor(a).hue() < QColor(b).hue(); };
-        case saturation:
-            return [](QRgb const & a, QRgb const & b) -> bool { return QColor(a).saturation() < QColor(b).saturation(); };
-        case value:
-            return [](QRgb const & a, QRgb const & b) -> bool { return QColor(a).value() < QColor(b).value(); };
-        default:
-            //blue
-            return [](QRgb const & a, QRgb const & b) -> bool { return qBlue(a) < qBlue(b); };
-    }
-}
-
 void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){
-    auto sortFunc = PixelSorter::sortFunc(sortType);
+    auto sortFunc = [&](QRgb const & a, QRgb const & b) -> bool {
+            switch(sortType){
+                case red:
+                    return qRed(a) < qRed(b);
+                case green:
+                    return qGreen(a) < qGreen(b);
+                case hue:
+                    return QColor(a).hue() < QColor(b).hue();
+                case saturation:
+                    return QColor(a).saturation() < QColor(b).saturation();
+                case value:
+                    return QColor(a).value() < QColor(b).value();
+                default:
+                    //blue
+                    return qBlue(a) < qBlue(b);
+            }
+    };
     int imageHeight = image->height();
     int imageWidth = image->width();
     //sanity check on endIndex
