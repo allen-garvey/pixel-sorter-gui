@@ -1,5 +1,7 @@
 #include "pixelsorter.h"
 #include <algorithm>
+#include <omp.h>
+#include <iostream>
 
 std::function<bool (QRgb const &, QRgb const &)> PixelSorter::sortFunc(PixelSorterColor sortType){
     switch(sortType){
@@ -26,6 +28,7 @@ void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, 
     //sanity check on endIndex
     endIndex = endIndex > imageHeight ? imageHeight : endIndex;
 
+    double startTime = omp_get_wtime();
     //pixel manipulation based on: http://stackoverflow.com/questions/2095039/qt-qimage-pixel-manipulation
     int linesSorted = 0;
     QRgb *rowData;
@@ -38,6 +41,10 @@ void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, 
             i += skipIndex;
         }
     }
+
+    double endTime = omp_get_wtime();
+    double megaPixelSortsPerSecond = (double)(imageHeight * imageWidth)/(endTime-startTime)/1000000.;
+    std::cout << "MegaPixelSortsPerSecond: " << megaPixelSortsPerSecond << std::endl;
 }
 
 void PixelSorter::pixelSortVertical(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex){

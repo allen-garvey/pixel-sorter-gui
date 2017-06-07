@@ -31,3 +31,7 @@ HEADERS  += imageviewer.h \
     pixelsorter.h
 
 FORMS    += imageviewer.ui
+
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
+
