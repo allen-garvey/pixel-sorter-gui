@@ -12,6 +12,7 @@ class PixelSorter
   static void pixelSortHorizontal(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex);
   static void pixelSortVertical(QImage *image, PixelSorterColor sortType, int startIndex, int countIndex, int skipIndex, int endIndex);
  private:
+  static void countingPixelSort(QRgb *scanLine, int length, PixelSorterColor sortType);
   // Disallow creating an instance of this object
   PixelSorter() {}
 };
