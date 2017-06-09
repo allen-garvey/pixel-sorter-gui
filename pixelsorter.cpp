@@ -7,12 +7,12 @@
 
 void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor sortType)
 {
-    const int rgbLimit = 256;
+    const int RGB_LIMIT = 256;
 
-    std::array <std::vector<QRgb>, rgbLimit> pixelMatrix;
+    std::array <std::vector<QRgb>, RGB_LIMIT> pixelMatrix;
 
     #pragma omp parallel for
-    for(int i=0;i<rgbLimit;i++){
+    for(int i=0;i<RGB_LIMIT;i++){
         pixelMatrix[i] = std::vector<QRgb>();
     }
 
@@ -47,15 +47,21 @@ void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor
         pixelMatrix[pixelIndex].push_back(currentPixel);
     }
 
-    for(int i=0, scanLineIndex=0;i<rgbLimit;i++){
-        std::vector<QRgb> currentVector = pixelMatrix[i];
-        int currentVectorSize = currentVector.size();
-        for(int j=0;j<currentVectorSize;j++){
-            scanLine[scanLineIndex] = currentVector[j];
-            scanLineIndex++;
-        }
+    std::array<int, RGB_LIMIT> vectorOffsets;
+    vectorOffsets[0] = 0;
+    for(int i=1;i<RGB_LIMIT;i++){
+        vectorOffsets[i] = vectorOffsets[i-1] + pixelMatrix[i-1].size();
     }
 
+    #pragma omp parallel for
+    for(int i=0;i<RGB_LIMIT;i++){
+        std::vector<QRgb> currentVector = pixelMatrix[i];
+        int currentVectorSize = currentVector.size();
+        int currentOffset = vectorOffsets[i];
+        for(int j=0;j<currentVectorSize;j++){
+            scanLine[currentOffset + j] = currentVector[j];
+        }
+    }
 }
 
 
