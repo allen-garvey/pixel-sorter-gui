@@ -8,14 +8,25 @@
 void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor sortType)
 {
     const int RGB_LIMIT = 256;
+    const int HUE_LIMIT = 360;
+    const int NUM_THREADS = omp_get_max_threads();
 
-    std::array <std::vector<QRgb>, RGB_LIMIT> pixelMatrix;
+    int MATRIX_SIZE;
+    if(sortType == hue){
+        MATRIX_SIZE = HUE_LIMIT * NUM_THREADS;
+    }
+    else{
+        MATRIX_SIZE = RGB_LIMIT * NUM_THREADS;
+    }
+
+    std::vector<QRgb> *pixelMatrix = new std::vector<QRgb>[MATRIX_SIZE];
 
     #pragma omp parallel for
-    for(int i=0;i<RGB_LIMIT;i++){
+    for(int i=0;i<MATRIX_SIZE;i++){
         pixelMatrix[i] = std::vector<QRgb>();
     }
 
+    #pragma omp parallel for
     for(int i=0;i<length;i++){
         QRgb currentPixel = scanLine[i];
         int pixelIndex;
@@ -44,17 +55,19 @@ void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor
                 pixelIndex = qBlue(currentPixel);
                 break;
         }
-        pixelMatrix[pixelIndex].push_back(currentPixel);
+        int currentThreadNum = omp_get_thread_num();
+        int matrixIndex = (pixelIndex * NUM_THREADS) + currentThreadNum;
+        pixelMatrix[matrixIndex].push_back(currentPixel);
     }
 
-    std::array<int, RGB_LIMIT> vectorOffsets;
+    int *vectorOffsets = new int[MATRIX_SIZE];
     vectorOffsets[0] = 0;
-    for(int i=1;i<RGB_LIMIT;i++){
+    for(int i=1;i<MATRIX_SIZE;i++){
         vectorOffsets[i] = vectorOffsets[i-1] + pixelMatrix[i-1].size();
     }
 
     #pragma omp parallel for
-    for(int i=0;i<RGB_LIMIT;i++){
+    for(int i=0;i<MATRIX_SIZE;i++){
         std::vector<QRgb> currentVector = pixelMatrix[i];
         int currentVectorSize = currentVector.size();
         int currentOffset = vectorOffsets[i];
@@ -62,6 +75,9 @@ void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor
             scanLine[currentOffset + j] = currentVector[j];
         }
     }
+
+    delete[] vectorOffsets;
+    delete[] pixelMatrix;
 }
 
 
