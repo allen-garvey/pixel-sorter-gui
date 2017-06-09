@@ -10,9 +10,12 @@ void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor
     const int rgbLimit = 256;
 
     std::array <std::vector<QRgb>, rgbLimit> pixelMatrix;
+
+    #pragma omp parallel for
     for(int i=0;i<rgbLimit;i++){
         pixelMatrix[i] = std::vector<QRgb>();
     }
+
     for(int i=0;i<length;i++){
         QRgb currentPixel = scanLine[i];
         int pixelIndex;
@@ -41,10 +44,9 @@ void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor
                 pixelIndex = qBlue(currentPixel);
                 break;
         }
-
-//        pixelMatrix.at(pixelIndex).push_back(currentPixel);
         pixelMatrix[pixelIndex].push_back(currentPixel);
     }
+
     for(int i=0, scanLineIndex=0;i<rgbLimit;i++){
         std::vector<QRgb> currentVector = pixelMatrix[i];
         int currentVectorSize = currentVector.size();
