@@ -2,7 +2,6 @@
 #define PIXELSORTER_H
 
 #include <QtWidgets>
-#include <functional>
 
 enum PixelSorterColor {red=0, green, blue, hue, saturation, value};
 
