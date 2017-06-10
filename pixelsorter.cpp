@@ -5,21 +5,21 @@
 #include <array>
 #include <vector>
 
-void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor sortType)
+void PixelSorter::countingPixelSort(std::vector<QRgb> *pixelMatrix, int *vectorOffsets, int MATRIX_SIZE, QRgb *scanLine, int length, PixelSorterColor sortType)
 {
-    const int RGB_LIMIT = 256;
-    const int HUE_LIMIT = 360;
+//    const int RGB_LIMIT = 256;
+//    const int HUE_LIMIT = 360;
     const int NUM_THREADS = omp_get_max_threads();
 
-    int MATRIX_SIZE;
-    if(sortType == hue){
-        MATRIX_SIZE = HUE_LIMIT * NUM_THREADS;
-    }
-    else{
-        MATRIX_SIZE = RGB_LIMIT * NUM_THREADS;
-    }
+//    int MATRIX_SIZE;
+//    if(sortType == hue){
+//        MATRIX_SIZE = HUE_LIMIT * NUM_THREADS;
+//    }
+//    else{
+//        MATRIX_SIZE = RGB_LIMIT * NUM_THREADS;
+//    }
 
-    std::vector<QRgb> *pixelMatrix = new std::vector<QRgb>[MATRIX_SIZE];
+//    std::vector<QRgb> *pixelMatrix = new std::vector<QRgb>[MATRIX_SIZE];
 
     #pragma omp parallel for
     for(int i=0;i<MATRIX_SIZE;i++){
@@ -60,7 +60,7 @@ void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor
         pixelMatrix[matrixIndex].push_back(currentPixel);
     }
 
-    int *vectorOffsets = new int[MATRIX_SIZE];
+//    int *vectorOffsets = new int[MATRIX_SIZE];
     vectorOffsets[0] = 0;
     for(int i=1;i<MATRIX_SIZE;i++){
         vectorOffsets[i] = vectorOffsets[i-1] + pixelMatrix[i-1].size();
@@ -76,8 +76,8 @@ void PixelSorter::countingPixelSort(QRgb *scanLine, int length, PixelSorterColor
         }
     }
 
-    delete[] vectorOffsets;
-    delete[] pixelMatrix;
+//    delete[] vectorOffsets;
+//    delete[] pixelMatrix;
 }
 
 
@@ -88,18 +88,39 @@ void PixelSorter::pixelSortHorizontal(QImage *image, PixelSorterColor sortType, 
     endIndex = endIndex > imageHeight ? imageHeight : endIndex;
 
     double startTime = omp_get_wtime();
+
+    //initialize memory for pixelMatrix and vectorOffsets arrays
+    const int RGB_LIMIT = 256;
+    const int HUE_LIMIT = 360;
+    const int NUM_THREADS = omp_get_max_threads();
+
+    int MATRIX_SIZE;
+    if(sortType == hue){
+        MATRIX_SIZE = HUE_LIMIT * NUM_THREADS;
+    }
+    else{
+        MATRIX_SIZE = RGB_LIMIT * NUM_THREADS;
+    }
+
+    std::vector<QRgb> *pixelMatrix = new std::vector<QRgb>[MATRIX_SIZE];
+    int *vectorOffsets = new int[MATRIX_SIZE];
+
     //pixel manipulation based on: http://stackoverflow.com/questions/2095039/qt-qimage-pixel-manipulation
     int linesSorted = 0;
     QRgb *rowData;
     for(int i=startIndex;i<endIndex;i++){
         rowData = (QRgb*)image->scanLine(i);
-        PixelSorter::countingPixelSort(rowData, imageWidth, sortType);
+        PixelSorter::countingPixelSort(pixelMatrix, vectorOffsets, MATRIX_SIZE, rowData, imageWidth, sortType);
         linesSorted++;
         if(linesSorted == countIndex){
             linesSorted = 0;
             i += skipIndex;
         }
     }
+
+    //clean up memory
+    delete[] vectorOffsets;
+    delete[] pixelMatrix;
 
     double endTime = omp_get_wtime();
     double megaPixelSortsPerSecond = (double)(imageHeight * imageWidth)/(endTime-startTime)/1000000.;
