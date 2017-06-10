@@ -1,25 +1,11 @@
 #include "pixelsorter.h"
-#include <algorithm>
 #include <omp.h>
 #include <iostream>
-#include <array>
 #include <vector>
 
 void PixelSorter::countingPixelSort(std::vector<QRgb> *pixelMatrix, int *vectorOffsets, int MATRIX_SIZE, QRgb *scanLine, int length, PixelSorterColor sortType)
 {
-//    const int RGB_LIMIT = 256;
-//    const int HUE_LIMIT = 360;
     const int NUM_THREADS = omp_get_max_threads();
-
-//    int MATRIX_SIZE;
-//    if(sortType == hue){
-//        MATRIX_SIZE = HUE_LIMIT * NUM_THREADS;
-//    }
-//    else{
-//        MATRIX_SIZE = RGB_LIMIT * NUM_THREADS;
-//    }
-
-//    std::vector<QRgb> *pixelMatrix = new std::vector<QRgb>[MATRIX_SIZE];
 
     #pragma omp parallel for
     for(int i=0;i<MATRIX_SIZE;i++){
@@ -60,7 +46,6 @@ void PixelSorter::countingPixelSort(std::vector<QRgb> *pixelMatrix, int *vectorO
         pixelMatrix[matrixIndex].push_back(currentPixel);
     }
 
-//    int *vectorOffsets = new int[MATRIX_SIZE];
     vectorOffsets[0] = 0;
     for(int i=1;i<MATRIX_SIZE;i++){
         vectorOffsets[i] = vectorOffsets[i-1] + pixelMatrix[i-1].size();
@@ -76,8 +61,6 @@ void PixelSorter::countingPixelSort(std::vector<QRgb> *pixelMatrix, int *vectorO
         }
     }
 
-//    delete[] vectorOffsets;
-//    delete[] pixelMatrix;
 }
 
 
