@@ -6,6 +6,7 @@
 void PixelSorter::countingPixelSort(std::vector<QRgb> *pixelMatrix, int *vectorOffsets, int MATRIX_SIZE, QRgb *scanLine, int length, PixelSorterColor sortType)
 {
     const int NUM_THREADS = omp_get_max_threads();
+    const int PIXEL_OFFSET = MATRIX_SIZE / NUM_THREADS;
 
     #pragma omp parallel for
     for(int i=0;i<MATRIX_SIZE;i++){
@@ -42,13 +43,22 @@ void PixelSorter::countingPixelSort(std::vector<QRgb> *pixelMatrix, int *vectorO
                 break;
         }
         int currentThreadNum = omp_get_thread_num();
-        int matrixIndex = (pixelIndex * NUM_THREADS) + currentThreadNum;
+        int matrixIndex = (currentThreadNum * PIXEL_OFFSET) + pixelIndex;
         pixelMatrix[matrixIndex].push_back(currentPixel);
     }
 
-    vectorOffsets[0] = 0;
-    for(int i=1;i<MATRIX_SIZE;i++){
-        vectorOffsets[i] = vectorOffsets[i-1] + pixelMatrix[i-1].size();
+    int previousIndex = -1;
+    for(int i=0;i<PIXEL_OFFSET;i++){
+        for(int j=0;j<NUM_THREADS;j++){
+            int currentIndex = (j * PIXEL_OFFSET) + i;
+            if(previousIndex < 0){
+                vectorOffsets[currentIndex] = 0;
+            }
+            else{
+                vectorOffsets[currentIndex] = vectorOffsets[previousIndex] + pixelMatrix[previousIndex].size();
+            }
+            previousIndex = currentIndex;
+        }
     }
 
     #pragma omp parallel for
