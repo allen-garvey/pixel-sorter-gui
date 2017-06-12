@@ -67,7 +67,6 @@ ImageViewer::ImageViewer(QWidget *parent) :
 
     //layout for image view
     imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setScaledContents(true);
 
     imageScrollArea->setBackgroundRole(QPalette::Dark);
     imageScrollArea->setVisible(false);
@@ -123,7 +122,7 @@ bool ImageViewer::loadFile(const QString &fileName)
 void ImageViewer::setImage(const QImage &newImage)
 {
     image = newImage;
-    imageLabel->setPixmap(QPixmap::fromImage(image));
+    imageLabel->setPixmap(QPixmap::fromImage(image.scaled(imageLabel->width(), imageLabel->height(), Qt::KeepAspectRatio)));
     scaleFactor = 1.0;
 
     imageScrollArea->setVisible(true);
