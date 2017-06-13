@@ -109,6 +109,7 @@ bool ImageViewer::loadFile(const QString &fileName)
     }
     isImageLoaded = true;
 
+    scaleFactor = 1.0;
     setImage(newImage);
     resetSortControlsToDefaults();
     setWindowFilePath(fileName);
@@ -122,8 +123,7 @@ bool ImageViewer::loadFile(const QString &fileName)
 void ImageViewer::setImage(const QImage &newImage)
 {
     image = newImage;
-    imageLabel->setPixmap(QPixmap::fromImage(image.scaled(imageLabel->width(), imageLabel->height(), Qt::KeepAspectRatio)));
-    scaleFactor = 1.0;
+    imageLabel->setPixmap(QPixmap::fromImage(image.scaled(imageLabel->width() * scaleFactor, imageLabel->height() * scaleFactor, Qt::KeepAspectRatio)));
 
     imageScrollArea->setVisible(true);
     fitToWindowAct->setEnabled(true);
@@ -348,7 +348,7 @@ void ImageViewer::scaleImage(double factor)
 {
     Q_ASSERT(imageLabel->pixmap());
     scaleFactor *= factor;
-    imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
+    setImage(image);
 
     adjustScrollBar(imageScrollArea->horizontalScrollBar(), factor);
     adjustScrollBar(imageScrollArea->verticalScrollBar(), factor);
