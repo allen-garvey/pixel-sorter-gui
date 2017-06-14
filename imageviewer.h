@@ -113,6 +113,8 @@ private:
         double scaleFactor;
         bool isImageLoaded;
         bool isCurrentlySorting;
+        int imageLabelInitialHeight;
+        int imageLabelInitialWidth;
 
         QAction *saveAsAct;
         QAction *copyAct;

@@ -63,6 +63,8 @@ ImageViewer::ImageViewer(QWidget *parent) :
     ui->setupUi(this);
 
     imageLabel = ui->imageLabel;
+    imageLabelInitialHeight = imageLabel->height();
+    imageLabelInitialWidth = imageLabel->width();
     imageScrollArea = ui->imageScrollArea;
 
     //layout for image view
@@ -123,7 +125,9 @@ bool ImageViewer::loadFile(const QString &fileName)
 void ImageViewer::setImage(const QImage &newImage)
 {
     image = newImage;
-    imageLabel->setPixmap(QPixmap::fromImage(image.scaled(imageLabel->width() * scaleFactor, imageLabel->height() * scaleFactor, Qt::KeepAspectRatio)));
+    QPixmap pixMap = QPixmap::fromImage(image.scaled(imageLabelInitialWidth * scaleFactor, imageLabelInitialHeight * scaleFactor, Qt::KeepAspectRatio));
+    imageLabel->setPixmap(pixMap);
+    imageLabel->setFixedSize(pixMap.size());
 
     imageScrollArea->setVisible(true);
     fitToWindowAct->setEnabled(true);
