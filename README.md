@@ -6,6 +6,7 @@ GUI application made with Qt to pixel sort image files. Based on [Qt ImageView e
 
 * Qt 5.8.0
 * g++ 5.4.0
+* OpenMP
 
 ## Getting Started
 
